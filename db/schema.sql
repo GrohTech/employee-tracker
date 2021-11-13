@@ -4,7 +4,7 @@ name VARCHAR (30)
 );
 
 CREATE TABLE role (
-id INTEGER AUTO_INCREMENT PRIMARY KEY,
+id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
 title VARCHAR(30),
 salary DECIMAL,
 CONSTRAINT fk_department_id 
@@ -14,10 +14,13 @@ REFERENCES department(department_id) ON UPDATE CASCADE ON DELETE RESTRICT;
 
 CREATE TABLE employee (
 id; INTEGER AUTO_INCREMENT PRIMARY KEY,
-first_name VARCHAR(30),
-last_name VARCHAR(30),
+first_name VARCHAR(30) NOT NULL,
+last_name VARCHAR(30) NOT NULL,
 CONSTRAINT fk_role_id
-FOREIGN KEY (role_id),
+FOREIGN KEY (role_id)
 REFERENCES role(role_id) ON UPDATE CASCADE,
 manager_id
+CONSTRAINT fk_manager_id
+FOREIGN KEY (manager_id)
+REFERENCES employee(manager_id) ON DELETE SET NULL;
 );
