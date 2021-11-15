@@ -9,10 +9,11 @@ dept_name VARCHAR(30) NOT NULL
 
 CREATE TABLE role (
 role_id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
-title VARCHAR(30),
-salary DECIMAL,
+title VARCHAR(30) NOT NULL,
+salary DECIMAL NOT NULL,
 dept_id INTEGER,
-CONSTRAINT fk_department_id 
+INDEX idx_dept(dept_id),
+CONSTRAINT fk_dept_id 
 FOREIGN KEY (dept_id)
 REFERENCES department(dept_id) ON DELETE SET NULL
 );
@@ -22,12 +23,13 @@ id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
 first_name VARCHAR(30) NOT NULL,
 last_name VARCHAR(30) NOT NULL,
 role_id INTEGER,
-manager_id INTEGER UNIQUE,
+INDEX idx_role(role_id),
 CONSTRAINT fk_role_id
 FOREIGN KEY (role_id)
 REFERENCES role(role_id) ON DELETE SET NULL,
-INDEX id_manager(manager_id),
+manager_id INTEGER,
+INDEX idx_manager(manager_id),
 CONSTRAINT fk_manager_id
 FOREIGN KEY (manager_id)
-REFERENCES employee(manager_id) ON DELETE SET NULL
+REFERENCES employee(id) ON DELETE SET NULL
 );
