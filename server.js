@@ -34,8 +34,8 @@ function prompt() {
 }
 
 function viewEmployees(){
-    dbQueries.findAllEmployees().then(([roles])=>{
-        console.table(roles);
+    dbQueries.findAllEmployees().then(([employees])=>{
+        console.table(employees);
     }).then(()=>prompt())
 };
 function viewRoles(){

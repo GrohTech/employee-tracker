@@ -19,7 +19,9 @@ class Db {
     }
     findAllRoles() {
         const sql = `
-        SELECT role.title
+        SELECT role.title, role.role_id, role.salary, department.dept_name AS department 
+        FROM role
+        INNER JOIN department ON role.dept_id
         `;
         return this.connection.promise().query(sql)
     }
