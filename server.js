@@ -7,6 +7,14 @@ const express = require('express');
 const PORT = process.env.PORT || 3001;
 const app = express();
 
+// Start server after DB connection
+db.connect(err => {
+    if (err) throw err;
+    console.log('Database connected.');
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+    });
+  });
 
 function prompt() {
     inquirer.prompt([{
@@ -16,8 +24,13 @@ function prompt() {
         choices: [
             {name: 'View all employees',
              value: 'view_employees'},
+            {name: 'View all departments',
+             value: 'view_departments'},
             {name: 'View all roles',
-            value: 'view_roles'}
+            value: 'view_roles'},
+            {name: 'Add a department',
+            value: 'add_department'}
+            
             //  add more choices
         ]
 
@@ -25,17 +38,29 @@ function prompt() {
         switch(res.choice){
             case 'view_employees': viewEmployees();
             break;
+            case 'view_departments': viewDepartments();
+            break;
             case 'view_roles': viewRoles();
             break;
             // add more cases
-        }
-    })
+            case'add_department':
+            switch(res.add){
+                case 'add_department': addDepartment();
+                break;
+            };
+        };
+    });
 
-}
+};
 
 function viewEmployees(){
     dbQueries.findAllEmployees().then(([employees])=>{
         console.table(employees);
+    }).then(()=>prompt())
+};
+function viewDepartments(){
+    dbQueries.findAllDepartments().then(([departments])=>{
+        console.table(departments);
     }).then(()=>prompt())
 };
 function viewRoles(){
@@ -43,14 +68,10 @@ function viewRoles(){
         console.table(roles);
     }).then(()=>prompt())
 };
+function addDepartment(){
+    dbQueries.addDepartment().then(([newDept])=>{
+        console.table(newDept);
+    }).then(()=>prompt())
+};
 
 prompt();
-
-// Start server after DB connection
-db.connect(err => {
-    if (err) throw err;
-    console.log('Database connected.');
-    app.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
-    });
-  });
