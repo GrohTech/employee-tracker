@@ -13,10 +13,11 @@ db.connect(err => {
     console.log('Database connected.');
     app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);
+      init();
     });
   });
 
-function prompt() {
+function init() {
     inquirer.prompt([{
         type: "list",
         name: "choice",
@@ -56,22 +57,20 @@ function prompt() {
 function viewEmployees(){
     dbQueries.findAllEmployees().then(([employees])=>{
         console.table(employees);
-    }).then(()=>prompt())
+    }).then(()=>init())
 };
 function viewDepartments(){
     dbQueries.findAllDepartments().then(([departments])=>{
         console.table(departments);
-    }).then(()=>prompt())
+    }).then(()=>init())
 };
 function viewRoles(){
     dbQueries.findAllRoles().then(([roles])=>{
         console.table(roles);
-    }).then(()=>prompt())
+    }).then(()=>init())
 };
 function addDepartment(){
     dbQueries.addDepartment().then(([newDept])=>{
         console.table(newDept);
-    }).then(()=>prompt())
+    }).then(()=>init())
 };
-
-prompt();
