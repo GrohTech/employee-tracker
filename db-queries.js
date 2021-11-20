@@ -16,14 +16,14 @@ class Db {
         ON manager.id = employee.manager_id
         `;
         return this.connection.promise().query(sql)
-    }
+    };
     findAllDepartments() {
         const sql = `
         SELECT department.dept_name AS department, department.dept_id as id
         FROM department
         `;
         return this.connection.promise().query(sql)
-    }
+    };
     findAllRoles() {
         const sql = `
         SELECT role.title, role.role_id as id, department.dept_name AS department, role.salary 
@@ -31,14 +31,28 @@ class Db {
         INNER JOIN department ON role.dept_id = department.dept_id;
         `;
         return this.connection.promise().query(sql)
-    }
+    };
     addDepartment() {
         const sql = `
-        INSERT INTO department (name)
+        INSERT INTO department (dept_name)
         VALUES (?);
         `;
         return this.connection.promise().query(sql)
-    }
+    };
+    // addRole() {
+    //     const sql = `
+    //     INSERT INTO role (role_title)
+    //     VALUES (?);
+    //     `;
+    //     return this.connection.promise().query(sql)
+    // };
+    // addEmployee() {
+    //     const sql = `
+    //     INSERT INTO employee (dept_name)
+    //     VALUES (?);
+    //     `;
+    //     return this.connection.promise().query(sql)
+    // };
 
 }
 

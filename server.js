@@ -43,12 +43,8 @@ function init() {
             break;
             case 'view_roles': viewRoles();
             break;
-            // add more cases
-            case'add_department':
-            switch(res.add){
-                case 'add_department': addDepartment();
-                break;
-            };
+            case'add_department': addDepartment();
+            break;
         };
     });
 
@@ -70,7 +66,17 @@ function viewRoles(){
     }).then(()=>init())
 };
 function addDepartment(){
+
+    // switch(res.add){
+    //     case 'add_department': addDepartment();
+    //     break;
+
     dbQueries.addDepartment().then(([newDept])=>{
         console.table(newDept);
     }).then(()=>init())
 };
+// function addRole(){
+//     dbQueries.addRole().then(([newRole])=>{
+//         console.table(newRole);
+//     }).then(()=>init())
+// };
