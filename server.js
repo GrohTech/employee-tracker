@@ -15,15 +15,18 @@ function prompt() {
         message: "What would you like to do?",
         choices: [
             {name: 'View all employees',
-             value: 'view_employees'}
+             value: 'view_employees'},
+            {name: 'View all roles',
+            value: 'view_roles'}
             //  add more choices
         ]
 
     }]).then(res => {
         switch(res.choice){
-            case 'view_employees':
-                viewEmployees()
-            break
+            case 'view_employees': viewEmployees();
+            break;
+            case 'view_roles': viewRoles();
+            break;
             // add more cases
         }
     })
@@ -32,6 +35,11 @@ function prompt() {
 
 function viewEmployees(){
     dbQueries.findAllEmployees().then(([roles])=>{
+        console.table(roles);
+    }).then(()=>prompt())
+};
+function viewRoles(){
+    dbQueries.findAllRoles().then(([roles])=>{
         console.table(roles);
     }).then(()=>prompt())
 };
