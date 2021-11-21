@@ -98,7 +98,6 @@ function addDepartment() {
     })
 };
 function addRole() {
-
     dbQueries.findAllDepartments()
     .then(([rows]) => {
       let departments = rows;
@@ -107,6 +106,13 @@ function addRole() {
         name: department,
         value: id
       }));
+    // dbQueries.findAllDepartments()
+    // .then(([roles]) => {
+    //   let deptList = roles;
+    //   const deptChoices = deptList.map(({ id, department }) => ({
+    //     name: department,
+    //     value: id
+    //   }));
     // dbQueries.findAllDepartments().then(([roles]) => {
     //     var deptList = roles;
     //     deptChoices = deptList.map(({
@@ -159,8 +165,8 @@ function addRole() {
         }
     ]).then(res => {
         console.log(res);
-        dbQueries.addDepartment(res.roleName, res.roleDept, res.roleSalary).then(([newDept]) => {
-            console.table(newDept);
+        dbQueries.addRole(res.roleName, res.roleSalary, res.roleDept).then(([newRole]) => {
+            console.table(newRole);
         }).then(() => init())
     })
 })};

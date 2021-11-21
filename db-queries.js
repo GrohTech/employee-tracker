@@ -40,13 +40,14 @@ class Db {
 
         return this.connection.promise().query(sql, deptName)
     };
-    addRole(roleName, roleDept, roleSalary) {
-        console.log(roleName, roleDept, roleSalary);
+    addRole(roleName, roleSalary, roleDept) {
+        console.log(roleName, roleSalary, roleDept);
+        const params = [roleName, roleSalary, roleDept];
         const sql = `
-        INSERT INTO role (role_title, salary, dept_id)
+        INSERT INTO role (title, salary, dept_id)
         VALUES (?, ?, ?);
         `;
-        return this.connection.promise().query(sql, roleName, roleSalary, roleDept)
+        return this.connection.promise().query(sql, params)
     };
     addEmployee() {
         const sql = `
