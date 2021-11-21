@@ -41,7 +41,6 @@ class Db {
         return this.connection.promise().query(sql, deptName)
     };
     addRole(roleName, roleSalary, roleDept) {
-        console.log(roleName, roleSalary, roleDept);
         const params = [roleName, roleSalary, roleDept];
         const sql = `
         INSERT INTO role (title, salary, dept_id)

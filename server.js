@@ -101,27 +101,10 @@ function addRole() {
     dbQueries.findAllDepartments()
     .then(([rows]) => {
       let departments = rows;
-      console.log(departments[1]);
       const deptChoices = departments.map(({ id, department }) => ({
         name: department,
         value: id
       }));
-    // dbQueries.findAllDepartments()
-    // .then(([roles]) => {
-    //   let deptList = roles;
-    //   const deptChoices = deptList.map(({ id, department }) => ({
-    //     name: department,
-    //     value: id
-    //   }));
-    // dbQueries.findAllDepartments().then(([roles]) => {
-    //     var deptList = roles;
-    //     deptChoices = deptList.map(({
-    //         deptName, deptId
-    //     }) => ({
-    //         name: deptName,
-    //         value: deptId
-    //     }));
-    // })
     inquirer.prompt([
         {
             type: 'input',
@@ -164,14 +147,8 @@ function addRole() {
             }
         }
     ]).then(res => {
-        console.log(res);
         dbQueries.addRole(res.roleName, res.roleSalary, res.roleDept).then(([newRole]) => {
             console.table(newRole);
         }).then(() => init())
     })
 })};
-// function addRole(){
-//     dbQueries.addRole().then(([newRole])=>{
-//         console.table(newRole);
-//     }).then(()=>init())
-// };
