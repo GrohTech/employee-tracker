@@ -42,6 +42,10 @@ function init() {
             {
                 name: 'Add a role',
                 value: 'add_role'
+            },
+            {
+                name: 'Add an employee',
+                value: 'add_employee'
             }
             //  add more choices
         ]
@@ -57,6 +61,8 @@ function init() {
             case 'add_department': addDepartment();
                 break;
             case 'add_role': addRole();
+                break;
+            case 'add_employee': addEmployee();
                 break;
         };
     });
@@ -99,56 +105,134 @@ function addDepartment() {
 };
 function addRole() {
     dbQueries.findAllDepartments()
-    .then(([rows]) => {
-      let departments = rows;
-      const deptChoices = departments.map(({ id, department }) => ({
-        name: department,
-        value: id
-      }));
-    inquirer.prompt([
-        {
-            type: 'input',
-            name: 'roleName',
-            message: 'What role would you like to add?',
-            validate: roleNameInput => {
-                if (roleNameInput) {
-                    return true;
-                } else {
-                    console.log('Please enter the name of the role.');
-                    return false;
+        .then(([rows]) => {
+            let departments = rows;
+            const deptChoices = departments.map(({ id, department }) => ({
+                name: department,
+                value: id
+            }));
+            inquirer.prompt([
+                {
+                    type: 'input',
+                    name: 'roleName',
+                    message: 'What role would you like to add?',
+                    validate: roleNameInput => {
+                        if (roleNameInput) {
+                            return true;
+                        } else {
+                            console.log('Please enter the name of the role.');
+                            return false;
+                        }
+                    }
+                },
+                {
+                    type: 'input',
+                    name: 'roleSalary',
+                    message: 'What is the salary of this role?',
+                    validate: salaryInput => {
+                        if (salaryInput) {
+                            return true;
+                        } else {
+                            console.log('Please enter the salary for this role.');
+                            return false;
+                        }
+                    }
+                },
+                {
+                    type: 'list',
+                    name: 'roleDept',
+                    message: 'What department does this role belong to?',
+                    choices: deptChoices,
+                    validate: roleDeptInput => {
+                        if (roleDeptInput) {
+                            return true;
+                        } else {
+                            console.log('Please enter the department this new role belongs to.');
+                            return false;
+                        }
+                    }
                 }
-            }
-        },
-        {
-            type: 'input',
-            name: 'roleSalary',
-            message: 'What is the salary of this role?',
-            validate: salaryInput => {
-                if (salaryInput) {
-                    return true;
-                } else {
-                    console.log('Please enter the salary for this role.');
-                    return false;
+            ]).then(res => {
+                dbQueries.addRole(res.roleName, res.roleSalary, res.roleDept).then(([newRole]) => {
+                    console.table(newRole);
+                }).then(() => init())
+            })
+        })
+};
+function addEmployee() {
+    dbQueries.findAllRoles()
+        .then(([rows]) => {
+            let employeeRoles = rows;
+            const roleChoices = employeeRoles.map(({ id, role }) => ({
+                name: role,
+                value: id
+        }));
+    dbQueries.findAllManagers()
+        .then(([rows]) => {
+            let employeeRoles = rows;
+            const roleChoices = employeeRoles.map(({ id, role }) => ({
+                name: role,
+                value: id
+        }));
+            inquirer.prompt([
+                {
+                    type: 'input',
+                    name: 'firstName',
+                    message: "Enter the employee's first name.",
+                    validate: firstNameInput => {
+                        if (firstNameInput) {
+                            return true;
+                        } else {
+                            console.log('Please enter a first name.');
+                            return false;
+                        }
+                    }
+                },
+                {
+                    type: 'input',
+                    name: 'lastName',
+                    message: "Enter the employee's last name",
+                    validate: lastNameInput => {
+                        if (lastNameInput) {
+                            return true;
+                        } else {
+                            console.log('Please enter a last name.');
+                            return false;
+                        }
+                    }
+                },
+                {
+                    type: 'list',
+                    name: 'employeeRole',
+                    message: "What is the employee's role?",
+                    choices: roleChoices,
+                    validate: roleSelect => {
+                        if (roleSelect) {
+                            return true;
+                        } else {
+                            console.log('Please select a role.');
+                            return false;
+                        }
+                    }
+                },
+                {
+                    type: 'list',
+                    name: 'manager',
+                    message: "Who is the employee's manager?",
+                    choices: managerChoices,
+                    validate: managerSelect => {
+                        if (managerSelect) {
+                            return true;
+                        } else {
+                            console.log('Please select a manager.');
+                            return false;
+                        }
+                    }
                 }
-            }
-        },
-        {
-            type: 'list',
-            name: 'roleDept',
-            message: 'What department does this role belong to?',
-            choices: deptChoices,
-            validate: roleDeptInput => {
-                if (roleDeptInput) {
-                    return true;
-                } else {
-                    console.log('Please enter the department this new role belongs to.');
-                    return false;
-                }
-            }
-        }
-    ]).then(res => {
-        dbQueries.addRole(res.roleName, res.roleSalary, res.roleDept).then(([newRole]) => {
-            console.table(newRole);
-        }).then(() => init())
-    })
-})};
+            ]).then(res => {
+                dbQueries.addRole(res.roleName, res.roleSalary, res.roleDept).then(([newRole]) => {
+                    console.table(newRole);
+                }).then(() => init())
+            })
+        })
+};
