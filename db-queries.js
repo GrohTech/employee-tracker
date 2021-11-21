@@ -32,27 +32,29 @@ class Db {
         `;
         return this.connection.promise().query(sql)
     };
-    addDepartment() {
+    addDepartment(deptName) {
         const sql = `
         INSERT INTO department (dept_name)
         VALUES (?)
         `;
+
+        return this.connection.promise().query(sql, deptName)
+    };
+    addRole(roleName, roleDept, roleSalary) {
+        console.log(roleName, roleDept, roleSalary);
+        const sql = `
+        INSERT INTO role (role_title, salary, dept_id)
+        VALUES (?, ?, ?);
+        `;
+        return this.connection.promise().query(sql, roleName, roleSalary, roleDept)
+    };
+    addEmployee() {
+        const sql = `
+        INSERT INTO employee (first_name, last_name, role_id, manager_id)
+        VALUES (?, ?, ?, ?);
+        `;
         return this.connection.promise().query(sql)
     };
-    // addRole() {
-    //     const sql = `
-    //     INSERT INTO role (role_title)
-    //     VALUES (?);
-    //     `;
-    //     return this.connection.promise().query(sql)
-    // };
-    // addEmployee() {
-    //     const sql = `
-    //     INSERT INTO employee (dept_name)
-    //     VALUES (?);
-    //     `;
-    //     return this.connection.promise().query(sql)
-    // };
 
 }
 
