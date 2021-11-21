@@ -30,8 +30,9 @@ function init() {
             {name: 'View all roles',
             value: 'view_roles'},
             {name: 'Add a department',
-            value: 'add_department'}
-            
+            value: 'add_department'},
+            {name: 'Add a role',
+            value: 'add_role'}
             //  add more choices
         ]
 
@@ -44,6 +45,8 @@ function init() {
             case 'view_roles': viewRoles();
             break;
             case'add_department': addDepartment();
+            break;
+            case'add_role': addRole();
             break;
         };
     });
@@ -66,14 +69,42 @@ function viewRoles(){
     }).then(()=>init())
 };
 function addDepartment(){
-
-    // switch(res.add){
-    //     case 'add_department': addDepartment();
-    //     break;
-
-    dbQueries.addDepartment().then(([newDept])=>{
-        console.table(newDept);
-    }).then(()=>init())
+    inquirer.prompt([{
+        type: 'input',
+        name: 'deptName',
+        message: 'What department would you like to add?',
+        validate: deptInput => {
+            if (deptInput) {
+                return true;
+            } else {
+                console.log('Please enter the department name.');
+                return false;
+            }
+        }
+    }]).then(res => {
+        dbQueries.addDepartment(res.deptName).then(([newDept])=>{
+            console.table(newDept);
+        }).then(()=>init())
+    })
+};
+function addRole(){
+    inquirer.prompt([{
+        type: 'input',
+        name: 'deptName',
+        message: 'What department would you like to add?',
+        validate: deptInput => {
+            if (deptInput) {
+                return true;
+            } else {
+                console.log('Please enter the department name.');
+                return false;
+            }
+        }
+    }]).then(res => {
+        dbQueries.addDepartment(res.deptName).then(([newDept])=>{
+            console.table(newDept);
+        }).then(()=>init())
+    })
 };
 // function addRole(){
 //     dbQueries.addRole().then(([newRole])=>{

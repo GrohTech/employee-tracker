@@ -35,7 +35,7 @@ class Db {
     addDepartment() {
         const sql = `
         INSERT INTO department (dept_name)
-        VALUES (?);
+        VALUES (?)
         `;
         return this.connection.promise().query(sql)
     };
