@@ -9,8 +9,8 @@ dept_name VARCHAR(30) NOT NULL
 
 CREATE TABLE role (
 role_id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
-title VARCHAR(30) NOT NULL,
-salary DECIMAL NOT NULL,
+title VARCHAR(30),
+salary DECIMAL,
 dept_id INTEGER,
 INDEX idx_dept(dept_id),
 CONSTRAINT fk_dept_id 

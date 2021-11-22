@@ -163,17 +163,17 @@ function addEmployee() {
     dbQueries.findAllRoles()
         .then(([rows]) => {
             let employeeRoles = rows;
-            const roleChoices = employeeRoles.map(({ id, role }) => ({
-                name: role,
+            const roleChoices = employeeRoles.map(({ id, title }) => ({
+                name: title,
                 value: id
-        }));
+            }));
     dbQueries.findAllManagers()
         .then(([rows]) => {
-            let employeeRoles = rows;
-            const roleChoices = employeeRoles.map(({ id, role }) => ({
-                name: role,
+            let managers = rows;
+            const managerChoices = managers.map(({ id, first_name, last_name }) => ({
+                name: first_name + " " + last_name,
                 value: id
-        }));
+            }));
             inquirer.prompt([
                 {
                     type: 'input',
@@ -230,9 +230,10 @@ function addEmployee() {
                     }
                 }
             ]).then(res => {
-                dbQueries.addRole(res.roleName, res.roleSalary, res.roleDept).then(([newRole]) => {
-                    console.table(newRole);
+                dbQueries.addEmployee(res.firstName, res.lastName, res.employeeRole, res.manager).then(([newEmployee]) => {
+                    console.table(newEmployee);
                 }).then(() => init())
             })
         })
-};
+    })
+};  

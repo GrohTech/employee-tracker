@@ -44,14 +44,23 @@ class Db {
         const params = [roleName, roleSalary, roleDept];
         const sql = `
         INSERT INTO role (title, salary, dept_id)
-        VALUES (?, ?, ?);
+        VALUES (?, ?, ?)
         `;
         return this.connection.promise().query(sql, params)
     };
-    addEmployee() {
+    addEmployee(firstName, lastName, employeeRole, manager) {
+        const params =[firstName, lastName, employeeRole, manager]
         const sql = `
         INSERT INTO employee (first_name, last_name, role_id, manager_id)
-        VALUES (?, ?, ?, ?);
+        VALUES (?, ?, ?, ?)
+        `;
+        return this.connection.promise().query(sql, params)
+    };
+    findAllManagers() {
+        const sql = `
+        SELECT employee.first_name, employee.last_name, employee.manager_id AS id
+        FROM employee
+        WHERE manager_id IS NULL
         `;
         return this.connection.promise().query(sql)
     };
