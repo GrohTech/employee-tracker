@@ -31,7 +31,7 @@ Clone repository and use npm install command in terminal. Then initiate app by t
 3. Continue selecting choicesa, as needed.
 4. View, add, update information, as needed.
 
-[App Demo Video](https://watch.screencastify.com/v/k4D8C9sYQhUtMQRhkq3R)
+[App Demo Video](https://watch.screencastify.com/v/cL3W8P0wV9iu4ffjihSJ)
 
 ## Languages & Tools
 
