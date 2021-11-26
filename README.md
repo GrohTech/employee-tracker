@@ -25,7 +25,20 @@ Users will need Node.js, Inquirer, Express, and MySQL2.
   
 ## Instructions 
 
-Clone repository and use npm install command in terminal. Then initiate app by typing node server.js in the terminal.
+Clone repository:
+```
+git clone <repository link>
+```
+
+Add all dependencies:
+```
+npm install
+```
+Initiate the app:
+```
+node server.js
+```
+
 1. Select a choice from the list.
 2. Answer questions, if applicable.
 3. Continue selecting choicesa, as needed.
@@ -45,7 +58,7 @@ Clone repository and use npm install command in terminal. Then initiate app by t
 ## Credits
 
 1. Lauren Groh 
-2. Front-end starter code from Trilogy and additional help from Trilogy tutor Ismael Lopez, Trilogy materials, and the below resources.
+2. Help from UW Extended Campus Trilogy bootcamp TAs Maria Wong and Raj Rai, Triology tutor Ismael Lopez, Trilogy materials, and the below resources:
  * [Steve Griffith - Prof3ssorSt3v3](https://youtu.be/UQK9_gKQHZg)
  * [w3 Schooles](https://www.w3schools.com/sql/sql_unique.asp)
  * [Stack Overflow](https://stackoverflow.com/questions/43511183/mysql-error-1822-failed-to-add-foreign-key-constraint-missing-index-for-contra)
