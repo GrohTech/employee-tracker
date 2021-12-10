@@ -49,7 +49,7 @@ class Db {
         return this.connection.promise().query(sql, params)
     };
     addEmployee(firstName, lastName, employeeRole, manager) {
-        const params =[firstName, lastName, employeeRole, manager]
+        const params = [firstName, lastName, employeeRole, manager]
         const sql = `
         INSERT INTO employee (first_name, last_name, role_id, manager_id)
         VALUES (?, ?, ?, ?)
@@ -64,7 +64,14 @@ class Db {
         `;
         return this.connection.promise().query(sql)
     };
-
+// // needs work
+//     updateRole(employeeRole, employeeId) {
+//         const params = [roleId]
+//         const sql = `
+//         UPDATE employee SET role_id = ?
+//         WHERE id = ?
+//         `;
+//     };
 }
 
 module.exports = new Db(connection);

@@ -46,8 +46,11 @@ function init() {
             {
                 name: 'Add an employee',
                 value: 'add_employee'
+            },
+            {
+                name: "Update an employee's role",
+                value: 'update_role'
             }
-            //  add more choices
         ]
 
     }]).then(res => {
@@ -63,6 +66,8 @@ function init() {
             case 'add_role': addRole();
                 break;
             case 'add_employee': addEmployee();
+                break;
+            case 'update_role': updateRole();
                 break;
         };
     });
@@ -167,73 +172,125 @@ function addEmployee() {
                 name: title,
                 value: id
             }));
-    dbQueries.findAllManagers()
+            dbQueries.findAllManagers()
+                .then(([rows]) => {
+                    let managers = rows;
+                    const managerChoices = managers.map(({ id, first_name, last_name }) => ({
+                        name: first_name + " " + last_name,
+                        value: id
+                    }));
+                    inquirer.prompt([
+                        {
+                            type: 'input',
+                            name: 'firstName',
+                            message: "Enter the employee's first name.",
+                            validate: firstNameInput => {
+                                if (firstNameInput) {
+                                    return true;
+                                } else {
+                                    console.log('Please enter a first name.');
+                                    return false;
+                                }
+                            }
+                        },
+                        {
+                            type: 'input',
+                            name: 'lastName',
+                            message: "Enter the employee's last name",
+                            validate: lastNameInput => {
+                                if (lastNameInput) {
+                                    return true;
+                                } else {
+                                    console.log('Please enter a last name.');
+                                    return false;
+                                }
+                            }
+                        },
+                        {
+                            type: 'list',
+                            name: 'employeeRole',
+                            message: "What is the employee's role?",
+                            choices: roleChoices,
+                            validate: roleSelect => {
+                                if (roleSelect) {
+                                    return true;
+                                } else {
+                                    console.log('Please select a role.');
+                                    return false;
+                                }
+                            }
+                        },
+                        {
+                            type: 'list',
+                            name: 'manager',
+                            message: "Who is the employee's manager?",
+                            choices: managerChoices,
+                            validate: managerSelect => {
+                                if (managerSelect) {
+                                    return true;
+                                } else {
+                                    console.log('Please select a manager.');
+                                    return false;
+                                }
+                            }
+                        }
+                    ]).then(res => {
+                        dbQueries.addEmployee(res.firstName, res.lastName, res.employeeRole, res.manager).then(([newEmployee]) => {
+                            console.table(newEmployee);
+                        }).then(() => init())
+                    })
+                })
+        })
+};
+function updateRole() {
+    dbQueries.findAllEmployees()
         .then(([rows]) => {
-            let managers = rows;
-            const managerChoices = managers.map(({ id, first_name, last_name }) => ({
+            let employees = rows;
+            const employeeChoices = employees.map(({ id, first_name, last_name }) => ({
                 name: first_name + " " + last_name,
                 value: id
             }));
-            inquirer.prompt([
-                {
-                    type: 'input',
-                    name: 'firstName',
-                    message: "Enter the employee's first name.",
-                    validate: firstNameInput => {
-                        if (firstNameInput) {
-                            return true;
-                        } else {
-                            console.log('Please enter a first name.');
-                            return false;
+            dbQueries.findAllRoles()
+                .then(([rows]) => {
+                    let employeeRoles = rows;
+                    const roleChoices = employeeRoles.map(({ id, title }) => ({
+                        name: title,
+                        value: id
+                    }));
+                    inquirer.prompt([
+                        {
+                            type: 'list',
+                            name: 'employee',
+                            message: "Who is the employee you'd like to update?",
+                            choices: employeeChoices,
+                            validate: employeeSelect => {
+                                if (employeeSelect) {
+                                    return true;
+                                } else {
+                                    console.log('Please select an employee.');
+                                    return false;
+                                }
+                            }
+                        },
+                        {
+                            type: 'list',
+                            name: 'newRole',
+                            message: "What is the new role of the employee?",
+                            choices: roleChoices,
+                            validate: roleSelect => {
+                                if (roleSelect) {
+                                    return true;
+                                } else {
+                                    console.log('Please select a role.');
+                                    return false;
+                                }
+                            }
                         }
-                    }
-                },
-                {
-                    type: 'input',
-                    name: 'lastName',
-                    message: "Enter the employee's last name",
-                    validate: lastNameInput => {
-                        if (lastNameInput) {
-                            return true;
-                        } else {
-                            console.log('Please enter a last name.');
-                            return false;
-                        }
-                    }
-                },
-                {
-                    type: 'list',
-                    name: 'employeeRole',
-                    message: "What is the employee's role?",
-                    choices: roleChoices,
-                    validate: roleSelect => {
-                        if (roleSelect) {
-                            return true;
-                        } else {
-                            console.log('Please select a role.');
-                            return false;
-                        }
-                    }
-                },
-                {
-                    type: 'list',
-                    name: 'manager',
-                    message: "Who is the employee's manager?",
-                    choices: managerChoices,
-                    validate: managerSelect => {
-                        if (managerSelect) {
-                            return true;
-                        } else {
-                            console.log('Please select a manager.');
-                            return false;
-                        }
-                    }
-                }
-            ]).then(res => {
-                dbQueries.addEmployee(res.firstName, res.lastName, res.employeeRole, res.manager).then(([newEmployee]) => {
-                    console.table(newEmployee);
-                }).then(() => init())
-            })
+                    ]).then(res => {
+                        dbQueries.updateRole(res.employee, res.newRole).then(([newRole]) => {
+                            console.table(newRole);
+                        }).then(() => init())
+                    })
+                })
         })
-    })
-};  
+};
