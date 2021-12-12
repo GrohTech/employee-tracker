@@ -261,7 +261,7 @@ function updateRole() {
                         {
                             type: 'list',
                             name: 'employee',
-                            message: "Who is the employee you'd like to update?",
+                            message: "Which employee would you like to update?",
                             choices: employeeChoices,
                             validate: employeeSelect => {
                                 if (employeeSelect) {
@@ -275,7 +275,7 @@ function updateRole() {
                         {
                             type: 'list',
                             name: 'newRole',
-                            message: "What is the new role of the employee?",
+                            message: "What is the employee's new role?",
                             choices: roleChoices,
                             validate: roleSelect => {
                                 if (roleSelect) {

@@ -64,14 +64,14 @@ class Db {
         `;
         return this.connection.promise().query(sql)
     };
-// // needs work
-//     updateRole(employeeRole, employeeId) {
-//         const params = [roleId]
-//         const sql = `
-//         UPDATE employee SET role_id = ?
-//         WHERE id = ?
-//         `;
-//     };
+    updateRole(employee, newRole) {
+        const params = [employee, newRole]
+        const sql = `
+        UPDATE employee SET role_id = ?
+        WHERE id = ?
+        `;
+        return this.connection.promise().query(sql)
+    };
 }
 
 module.exports = new Db(connection);
