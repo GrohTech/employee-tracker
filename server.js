@@ -287,8 +287,8 @@ function updateRole() {
                             }
                         }
                     ]).then(res => {
-                        dbQueries.updateRole(res.employee, res.newRole).then(([newRole]) => {
-                            console.table(newRole);
+                        dbQueries.updateRole(res.employee, res.newRole).then(([updateRole]) => {
+                            console.table(updateRole);
                         }).then(() => init())
                     })
                 })

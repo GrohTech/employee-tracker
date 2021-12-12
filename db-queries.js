@@ -70,7 +70,7 @@ class Db {
         UPDATE employee SET role_id = ?
         WHERE id = ?
         `;
-        return this.connection.promise().query(sql)
+        return this.connection.promise().query(sql, params)
     };
 }
 
