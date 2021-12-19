@@ -34,6 +34,26 @@ Add all dependencies:
 ```
 npm install
 ```
+Sign into MySQL:
+```
+mysql -u root -p
+```
+Import database:
+```
+source db/db.sql
+```
+Import schema:
+```
+source db/schema.sql
+```
+Import seeds:
+```
+source seeds.sql
+```
+Exit MySQL:
+```
+quit
+```
 Initiate the app:
 ```
 node server.js

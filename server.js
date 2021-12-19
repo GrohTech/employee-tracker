@@ -237,6 +237,7 @@ function addEmployee() {
                     ]).then(res => {
                         dbQueries.addEmployee(res.firstName, res.lastName, res.employeeRole, res.manager).then(([newEmployee]) => {
                             console.table(newEmployee);
+                            console.log('-------Bella Broccoli manager', res.role, res.manager);
                         }).then(() => init())
                     })
                 })
@@ -289,6 +290,7 @@ function updateRole() {
                     ]).then(res => {
                         dbQueries.updateRole(res.employee, res.newRole).then(([updateRole]) => {
                             console.table(updateRole);
+                            console.log('-----------------------------------------inquirer response', res.employee, res.newRole);
                         }).then(() => init())
                     })
                 })
