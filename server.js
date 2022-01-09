@@ -175,9 +175,9 @@ function addEmployee() {
             dbQueries.findAllManagers()
                 .then(([rows]) => {
                     let managers = rows;
-                    const managerChoices = managers.map(({ id, first_name, last_name }) => ({
+                    const managerChoices = managers.map(({ role_id, first_name, last_name }) => ({
                         name: first_name + " " + last_name,
-                        value: id
+                        value: role_id
                     }));
                     inquirer.prompt([
                         {
@@ -237,7 +237,6 @@ function addEmployee() {
                     ]).then(res => {
                         dbQueries.addEmployee(res.firstName, res.lastName, res.employeeRole, res.manager).then(([newEmployee]) => {
                             console.table(newEmployee);
-                            console.log('-------Bella Broccoli manager', res.role, res.manager);
                         }).then(() => init())
                     })
                 })
@@ -290,7 +289,6 @@ function updateRole() {
                     ]).then(res => {
                         dbQueries.updateRole(res.employee, res.newRole).then(([updateRole]) => {
                             console.table(updateRole);
-                            console.log('-----------------------------------------inquirer response', res.employee, res.newRole);
                         }).then(() => init())
                     })
                 })

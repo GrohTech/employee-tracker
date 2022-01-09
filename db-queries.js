@@ -59,7 +59,7 @@ class Db {
     };
     findAllManagers() {
         const sql = `
-        SELECT employee.first_name, employee.last_name, employee.manager_id AS id
+        SELECT employee.first_name, employee.last_name, employee.role_id
         FROM employee
         WHERE manager_id IS NULL
         `;
