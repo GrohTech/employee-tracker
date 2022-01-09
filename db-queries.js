@@ -54,7 +54,6 @@ class Db {
         INSERT INTO employee (first_name, last_name, role_id, manager_id)
         VALUES (?, ?, ?, ?)
         `;
-        console.log("----------Lucy Lemon's manager is", manager);
         return this.connection.promise().query(sql, params)
     };
     findAllManagers() {
@@ -65,11 +64,10 @@ class Db {
         `;
         return this.connection.promise().query(sql)
     };
-    updateRole(employee, newRole) {
-        const params = [newRole, employee]
-        console.log('db update role', employee, newRole);
+    updateRole(employee, newRole, newManager) {
+        const params = [newRole, newManager, employee]
         const sql = `
-        UPDATE employee SET role_id = ?
+        UPDATE employee SET role_id = ?, manager_id = ?
         WHERE id = ?
         `;
         return this.connection.promise().query(sql, params)

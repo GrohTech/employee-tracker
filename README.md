@@ -34,7 +34,7 @@ Add all dependencies:
 ```
 npm install
 ```
-Sign into MySQL:
+From the root of the repository, sign into MySQL:
 ```
 mysql -u root -p
 ```

@@ -257,6 +257,13 @@ function updateRole() {
                         name: title,
                         value: id
                     }));
+                    dbQueries.findAllManagers()
+                    .then(([rows]) => {
+                        let managers = rows;
+                        const managerChoices = managers.map(({ role_id, first_name, last_name }) => ({
+                            name: first_name + " " + last_name,
+                            value: role_id
+                        }));
                     inquirer.prompt([
                         {
                             type: 'list',
@@ -285,12 +292,29 @@ function updateRole() {
                                     return false;
                                 }
                             }
+                        },
+                        {
+                            type: 'list',
+                            name: 'newManager',
+                            message: "Who is the employee's manager in this new role?",
+                            choices: managerChoices,
+                            validate: managerSelect => {
+                                if (managerSelect) {
+                                    return true;
+                                } else {
+                                    console.log('Please select a manager.');
+                                    return false;
+                                }
+                            }
+                            
                         }
+                        
                     ]).then(res => {
-                        dbQueries.updateRole(res.employee, res.newRole).then(([updateRole]) => {
+                        dbQueries.updateRole(res.employee, res.newRole, res.newManager).then(([updateRole]) => {
                             console.table(updateRole);
                         }).then(() => init())
                     })
                 })
         })
+    })
 };
