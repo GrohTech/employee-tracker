@@ -48,7 +48,7 @@ source db/schema.sql
 ```
 Import seeds:
 ```
-source seeds.sql
+source db/seeds.sql
 ```
 Exit MySQL:
 ```
@@ -64,7 +64,8 @@ node server.js
 3. Continue selecting choicesa, as needed.
 4. View, add, update information, as needed.
 
-[App Demo Video](https://watch.screencastify.com/v/cL3W8P0wV9iu4ffjihSJ)
+* [App Demo Video Submission #1](https://watch.screencastify.com/v/cL3W8P0wV9iu4ffjihSJ)
+* [App Demo Video Submission #2](https://watch.screencastify.com/v/KHA73YEd53qYPZx0RQvn)
 
 ## Languages & Tools
 
