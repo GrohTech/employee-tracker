@@ -72,9 +72,8 @@ node server.js
 * JavaScript
 * Node.js
 * Inquirer
-* Express
-* Heroku
-* MySQL2
+* Express.js
+* MySQL
 
 ## Credits
 
